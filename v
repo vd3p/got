@@ -63,14 +63,14 @@ local CoreGui = cloneref(game:GetService('CoreGui'))
 local Debris = cloneref(game:GetService('Debris'))
 
 local mouse = Players.LocalPlayer:GetMouse()
-local old_fflags = CoreGui:FindFirstChild('fflags')
+local old_winds = CoreGui:FindFirstChild('winds')
 
-if old_fflags then
-	Debris:AddItem(old_fflags, 0)
+if old_winds then
+	Debris:AddItem(old_winds, 0)
 end
 
-if not isfolder("fflags") then
-	makefolder("fflags")
+if not isfolder("winds") then
+	makefolder("winds")
 end
 
 
@@ -298,7 +298,7 @@ local Config = setmetatable({
 	save = function(self: any, file_name: any, config: any)
 		local success_save, result = pcall(function()
 			local flags = HttpService:JSONEncode(config)
-			writefile('fflags/'..file_name..'.json', flags)
+			writefile('winds/'..file_name..'.json', flags)
 		end)
 
 		if not success_save then
@@ -307,13 +307,13 @@ local Config = setmetatable({
 	end,
 	load = function(self: any, file_name: any, config: any)
 		local success_load, result = pcall(function()
-			if not isfile('fflags/'..file_name..'.json') then
+			if not isfile('winds/'..file_name..'.json') then
 				self:save(file_name, config)
 
 				return
 			end
 
-			local flags = readfile('fflags/'..file_name..'.json')
+			local flags = readfile('winds/'..file_name..'.json')
 
 			if not flags then
 				self:save(file_name, config)
@@ -373,7 +373,7 @@ end
 Library._all_modules = {}
 
 local NotifyGui = Instance.new("ScreenGui")
-NotifyGui.Name = "fflagsNotifications"
+NotifyGui.Name = "windsNotifications"
 NotifyGui.ResetOnSpawn = false
 NotifyGui.IgnoreGuiInset = true
 NotifyGui.ZIndexBehavior = Enum.ZIndexBehavior.Global
@@ -550,17 +550,17 @@ end
 
 
 function Library:create_ui()
-	local old_fflags = CoreGui:FindFirstChild('fflags')
+	local old_winds = CoreGui:FindFirstChild('winds')
 
-	if old_fflags then
-		Debris:AddItem(old_fflags, 0)
+	if old_winds then
+		Debris:AddItem(old_winds, 0)
 	end
 
-	local fflags = Instance.new('ScreenGui')
-	fflags.ResetOnSpawn = false
-	fflags.Name = 'fflags'
-	fflags.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
-	fflags.Parent = CoreGui
+	local winds = Instance.new('ScreenGui')
+	winds.ResetOnSpawn = false
+	winds.Name = 'winds'
+	winds.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
+	winds.Parent = CoreGui
 
 	local Container = Instance.new('Frame')
 	Container.ClipsDescendants = true
@@ -573,7 +573,7 @@ function Library:create_ui()
 	Container.Size = UDim2.new(0, 0, 0, 0)
 	Container.Active = true
 	Container.BorderSizePixel = 0
-	Container.Parent = fflags
+	Container.Parent = winds
 
 	local UICorner = Instance.new('UICorner')
 	UICorner.CornerRadius = UDim.new(0, 16)
@@ -758,7 +758,7 @@ function Library:create_ui()
 	ClientName.FontFace = Font.new('rbxasset://fonts/families/GothamSSm.json', Enum.FontWeight.SemiBold, Enum.FontStyle.Normal)
 	ClientName.TextColor3 = Color3.fromRGB(99, 102, 241)
 	ClientName.TextTransparency = 0.20000000298023224
-	ClientName.Text = 'Winds | FFlags'
+	ClientName.Text = 'Winds'
 	ClientName.Name = 'ClientName'
 	ClientName.Size = UDim2.new(0, 31, 0, 13)
 	ClientName.AnchorPoint = Vector2.new(0, 0.5)
@@ -938,7 +938,7 @@ function Library:create_ui()
 	local UIScale = Instance.new('UIScale')
 	UIScale.Parent = Container    
 
-	self._ui = fflags
+	self._ui = winds
 
 	local function on_drag(input: InputObject, process: boolean)
 		if input.UserInputType == Enum.UserInputType.MouseButton1 or input.UserInputType == Enum.UserInputType.Touch then 
@@ -995,7 +995,7 @@ function Library:create_ui()
 	end;
 
 	function self:UIVisiblity()
-		fflags.Enabled = not fflags.Enabled;
+		winds.Enabled = not winds.Enabled;
 	end;
 
 	function self:change_visiblity(state: boolean)
@@ -1014,7 +1014,7 @@ function Library:create_ui()
 	function self:load()
 		local content = {}
 
-		for _, object in fflags:GetDescendants() do
+		for _, object in winds:GetDescendants() do
 			if not object:IsA('ImageLabel') then
 				continue
 			end
@@ -1335,7 +1335,7 @@ function Library:create_ui()
 				ModuleName.Text = settings.title or "Skibidi"
 			else
 				ModuleName.RichText = true
-				ModuleName.Text = settings.richtext or "<font color='rgb(255,0,0)'>fflags</font> user"
+				ModuleName.Text = settings.richtext or "<font color='rgb(255,0,0)'>winds</font> user"
 			end;
 			ModuleName.Name = 'ModuleName'
 			ModuleName.Size = UDim2.new(0, 205, 0, 13)
@@ -1685,7 +1685,7 @@ function Library:create_ui()
 					Body.Text = settings.text or "Skibidi"
 				else
 					Body.RichText = true
-					Body.Text = settings.richtext or "<font color='rgb(255,0,0)'>fflags</font> user"
+					Body.Text = settings.richtext or "<font color='rgb(255,0,0)'>winds</font> user"
 				end
 
 				Body.Size = UDim2.new(1, -10, 0, 20)
@@ -1755,7 +1755,7 @@ function Library:create_ui()
 					Body.Text = settings.text or "Skibidi" -- Default text
 				else
 					Body.RichText = true
-					Body.Text = settings.richtext or "<font color='rgb(255,0,0)'>fflags</font> user" -- Default rich text
+					Body.Text = settings.richtext or "<font color='rgb(255,0,0)'>winds</font> user" -- Default rich text
 				end
 
 				Body.Size = UDim2.new(1, -10, 1, 0)
@@ -1786,7 +1786,7 @@ function Library:create_ui()
 						Body.Text = new_settings.text or "Skibidi" -- Default text
 					else
 						Body.RichText = true
-						Body.Text = new_settings.richtext or "<font color='rgb(255,0,0)'>fflags</font> user" -- Default rich text
+						Body.Text = new_settings.richtext or "<font color='rgb(255,0,0)'>winds</font> user" -- Default rich text
 					end
 				end;
 
