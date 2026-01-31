@@ -719,7 +719,7 @@ function Library:create_ui()
 	Tabs.Selectable = false
 	Tabs.AutomaticCanvasSize = Enum.AutomaticSize.XY
 	Tabs.BackgroundTransparency = 1
-	Tabs.Position = UDim2.new(0.026097271591424942, 0, 0.1111111119389534, 0)
+	Tabs.Position = UDim2.new(0.026097271591424942, 0, 0.16, 0)
 	Tabs.BorderColor3 = Color3.fromRGB(0, 0, 0)
 	Tabs.BackgroundColor3 = Color3.fromRGB(235, 235, 245)
 	Tabs.BorderSizePixel = 0
@@ -738,6 +738,28 @@ function Library:create_ui()
 
 	Divider.Parent = Handler
 	
+	local Gradient = Instance.new("UIGradient")
+	Gradient.Transparency = NumberSequence.new{
+		NumberSequenceKeypoint.new(0, 1),
+		NumberSequenceKeypoint.new(0.5, 0),
+		NumberSequenceKeypoint.new(1, 1)
+	}
+	Gradient.Parent = Divider
+	
+	-------------------------------------------
+	
+	local Divider = Instance.new("Frame")
+	Divider.Name = "Divider"
+	Divider.BackgroundTransparency = 0.5
+	Divider.BorderSizePixel = 0
+	Divider.BackgroundColor3 = Color3.fromRGB(99, 102, 241)
+
+	-- مكانه تحت السيرش مباشرة
+	Divider.Position = UDim2.new(0, 0, 0.12, 0)
+	Divider.Size = UDim2.new(0, 150, 0, 1)
+
+	Divider.Parent = Handler
+
 	local Gradient = Instance.new("UIGradient")
 	Gradient.Transparency = NumberSequence.new{
 		NumberSequenceKeypoint.new(0, 1),
@@ -767,16 +789,34 @@ function Library:create_ui()
 	ClientName.TextXAlignment = Enum.TextXAlignment.Left
 	ClientName.BorderSizePixel = 0
 	ClientName.BorderColor3 = Color3.fromRGB(0, 0, 0)
-	ClientName.TextSize = 13
+	ClientName.TextSize = 15
 	ClientName.BackgroundColor3 = Color3.fromRGB(235, 235, 245)
 	ClientName.Parent = Handler
 
-	local UIGradient = Instance.new('UIGradient')
-	UIGradient.Color = ColorSequence.new{
-		ColorSequenceKeypoint.new(0, Color3.fromRGB(140, 150, 180)),
-		ColorSequenceKeypoint.new(1, Color3.fromRGB(235, 235, 245))
-	}
+	local UIGradient = Instance.new("UIGradient")
+	UIGradient.Color = ColorSequence.new({
+		ColorSequenceKeypoint.new(0, Color3.fromRGB(120, 140, 255)), -- اللون
+		ColorSequenceKeypoint.new(0.5, Color3.fromRGB(0, 0, 0)),     -- أسود
+		ColorSequenceKeypoint.new(1, Color3.fromRGB(120, 140, 255))  -- اللون
+	})
+	UIGradient.Offset = Vector2.new(-1, 0)
 	UIGradient.Parent = ClientName
+	
+	
+	local TweenService = game:GetService("TweenService")
+
+	local tween = TweenService:Create(
+		UIGradient,
+		TweenInfo.new(
+			0.8, -- السرعة (أقل = أسرع)
+			Enum.EasingStyle.Linear,
+			Enum.EasingDirection.InOut,
+			-1   -- تكرار لا نهائي
+		),
+		{ Offset = Vector2.new(1, 0) }
+	)
+
+	tween:Play()
 
 	local Pin = Instance.new('Frame')
 	Pin.Name = 'Pin'
